@@ -1,20 +1,40 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
 
-        Pedido pedidoComida = new PedidoComida(1, "Av. Siempre Viva 123", 4);
-        Pedido pedidoEncomienda = new PedidoEncomienda(2, "Calle Central 456", 8);
-        Pedido pedidoExpress = new PedidoExpress(3, "Ruta Norte 789", 6);
+        List<Pedido> pedidos = new ArrayList<>();
 
-        System.out.println("=== PEDIDO COMIDA ===");
-        pedidoComida.mostrarResumen();
-        System.out.println("Tiempo estimado: " + pedidoComida.calcularTiempoEntrega() + " minutos\n");
+        Pedido p1 = new PedidoComida(1, "Javiera");
+        Pedido p2 = new PedidoEncomienda(2, "Carlos");
+        Pedido p3 = new PedidoExpress(3, "Ana");
 
-        System.out.println("=== PEDIDO ENCOMIENDA ===");
-        pedidoEncomienda.mostrarResumen();
-        System.out.println("Tiempo estimado: " + pedidoEncomienda.calcularTiempoEntrega() + " minutos\n");
+        pedidos.add(p1);
+        pedidos.add(p2);
+        pedidos.add(p3);
 
-        System.out.println("=== PEDIDO EXPRESS ===");
-        pedidoExpress.mostrarResumen();
-        System.out.println("Tiempo estimado: " + pedidoExpress.calcularTiempoEntrega() + " minutos\n");
+        // Asignación automática
+        p1.asignarRepartidor();
+        p2.asignarRepartidor();
+
+        // Asignación manual (sobrecarga)
+        p3.asignarRepartidor("Luis");
+
+        for (Pedido p : pedidos) {
+            p.mostrarResumen();
+            System.out.println("Tiempo estimado: " + p.calcularTiempoEntrega() + " minutos");
+            p.despachar();
+            System.out.println();
+        }
+
+        // Cancelación
+        p2.cancelar();
+
+        // Historial
+        System.out.println("Historial del pedido 1:");
+        for (String evento : p1.verHistorial()) {
+            System.out.println("- " + evento);
+        }
     }
 }
